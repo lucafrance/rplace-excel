@@ -16,4 +16,5 @@ last_changes = last_changes.join(raw_df, on=["ts", "x_coordinate", "y_coordinate
 last_changes.reset_index(inplace=True)
 last_changes.sort_values(["x_coordinate", "y_coordinate", "color"], inplace=True)
 last_changes.drop_duplicates(inplace=True)
-last_changes.to_csv("tile_placements_last.csv", columns=["x_coordinate", "y_coordinate", "color"], index=False)
+last_changes = last_changes.pivot_table(index="y_coordinate", columns="x_coordinate", values="color", aggfunc=min, fill_value=0)
+last_changes.to_csv("tile_placements_last.csv", index=True)
